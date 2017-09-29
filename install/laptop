@@ -10,21 +10,22 @@ laptop_echo() {
   printf "\n[LAPTOP] $fmt\n" "$@"
 }
 
-append_to_zshrc() {
-  local text="$1" zshrc
+append_to_shellrc() {
+  local rcname="bashrc"
+  local text="$1" rcfile
   local skip_new_line="${2:-0}"
 
-  if [ -w "$HOME/.zshrc.local" ]; then
-    zshrc="$HOME/.zshrc.local"
+  if [ -w "$HOME/.${rcname}.local" ]; then
+    rcfile="$HOME/.${rcname}.local"
   else
-    zshrc="$HOME/.zshrc"
+    rcfile="$HOME/.${rcname}"
   fi
 
-  if ! grep -Fqs "$text" "$zshrc"; then
+  if ! grep -Fqs "$text" "$rcfile"; then
     if [ "$skip_new_line" -eq 1 ]; then
-      printf "%s\n" "$text" >> "$zshrc"
+      printf "%s\n" "$text" >> "$rcfile"
     else
-      printf "\n%s\n" "$text" >> "$zshrc"
+      printf "\n%s\n" "$text" >> "$rcfile"
     fi
   fi
 }
@@ -38,12 +39,12 @@ if [ ! -d "$HOME/bin/" ]; then
   mkdir "$HOME/bin"
 fi
 
-if [ ! -f "$HOME/.zshrc" ]; then
-  touch "$HOME/.zshrc"
+if [ ! -f "$HOME/.bashrc" ]; then
+  touch "$HOME/.bashrc"
 fi
 
 # shellcheck disable=SC2016
-append_to_zshrc 'export PATH="$HOME/bin:$PATH"'
+append_to_shellrc 'export PATH="$HOME/bin:$PATH"'
 
 HOMEBREW_PREFIX="/usr/local"
 
@@ -59,9 +60,9 @@ fi
 
 update_shell() {
   local shell_path;
-  shell_path="$(which zsh)"
+  shell_path="$(which bash)"
 
-  laptop_echo "Changing your shell to zsh ..."
+  laptop_echo "Changing your shell to bash ..."
   if ! grep "$shell_path" /etc/shells > /dev/null 2>&1 ; then
     laptop_echo "Adding '$shell_path' to /etc/shells"
     sudo sh -c "echo $shell_path >> /etc/shells"
@@ -70,8 +71,8 @@ update_shell() {
 }
 
 case "$SHELL" in
-  */zsh)
-    if [ "$(which zsh)" != '/bin/zsh' ] ; then
+  */bash)
+    if [ "$(which bash)" != '/usr/local/bin/bash' ] ; then
       update_shell
     fi
     ;;
@@ -80,24 +81,24 @@ case "$SHELL" in
     ;;
 esac
 
-gem_install_or_update() {
-  if gem list "$1" --installed > /dev/null; then
-    gem update "$@"
-  else
-    gem install "$@"
-    rbenv rehash
-  fi
-}
+# gem_install_or_update() {
+#   if gem list "$1" --installed > /dev/null; then
+#     gem update "$@"
+#   else
+#     gem install "$@"
+#     # rbenv rehash
+#   fi
+# }
 
 if ! command -v brew >/dev/null; then
   laptop_echo "Installing Homebrew ..."
     curl -fsS \
       'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
 
-    append_to_zshrc '# recommended by brew doctor'
+    append_to_shellrc '# recommended by brew doctor'
 
     # shellcheck disable=SC2016
-    append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
+    append_to_shellrc 'export PATH="/usr/local/bin:$PATH"' 1
 
     export PATH="/usr/local/bin:$PATH"
 fi
@@ -111,28 +112,23 @@ laptop_echo "Updating Homebrew formulae ..."
 brew update
 brew bundle -v --global
 
-laptop_echo "Configuring Ruby ..."
-find_latest_ruby() {
-  rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//'
+laptop_echo "Configuring dev languages..."
+find_latest_asdf() {
+  asdf list-all "$1" | grep -v - | tail -1 | sed -e 's/^ *//'
 }
 
-if [ -f "$BOOTSTRAP_DIR/.ruby-version" ]; then
-  ruby_version="$(<"$BOOTSTRAP_DIR/.ruby-version")"
-else
-  ruby_version="$(find_latest_ruby)"
-fi
+# if [ -f "$BOOTSTRAP_DIR/.ruby-version" ]; then
+  # ruby_version="$(<"$BOOTSTRAP_DIR/.ruby-version")"
+# else
+  # ruby_version="$(find_latest_ruby)"
+# fi
 
 # shellcheck disable=SC2016
-append_to_zshrc 'eval "$(rbenv init - --no-rehash)"' 1
-eval "$(rbenv init -)"
+append_to_shellrc "[ -f /usr/local/opt/asdf/asdf.sh ] && source /usr/local/opt/asdf/asdf.sh" 1
 
-if ! rbenv versions | grep -Fq "$ruby_version"; then
-  RUBY_CONFIGURE_OPTS=--with-openssl-dir=/usr/local/opt/openssl rbenv install -s "$ruby_version"
-fi
-
-rbenv global "$ruby_version"
-rbenv shell "$ruby_version"
-gem update --system
-gem_install_or_update 'bundler'
-number_of_cores=$(sysctl -n hw.ncpu)
-bundle config --global jobs $((number_of_cores - 1))
+# rbenv global "$ruby_version"
+# rbenv shell "$ruby_version"
+# gem update --system
+# gem_install_or_update 'bundler'
+# number_of_cores=$(sysctl -n hw.ncpu)
+# bundle config --global jobs $((number_of_cores - 1))

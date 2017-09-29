@@ -5,6 +5,7 @@
 # `brew bundle install --global`
 
 tap "caskroom/cask"
+tap "caskroom/drivers"
 tap "caskroom/versions"
 tap "homebrew/bundle"
 tap "homebrew/core"
@@ -15,45 +16,120 @@ tap "thoughtbot/formulae"
 
 # Homebrew
 # https://github.com/Homebrew/brew/
-brew "openssl"
-brew "libyaml"
-brew "bash-completion"
+brew "ack"
+brew "asdf"
+brew "bash"
+brew "bash-completion@2"
+brew "cloc"
+brew "coreutils"
 brew "ctags"
+brew "curl"
+brew "direnv"
 brew "dockutil"
+brew "fzf"
 brew "git"
+brew "git-extras"
+brew "gnuplot"
+brew "graphviz"
+brew "gzip"
 brew "htop"
 brew "hub"
+brew "jq"
 brew "mas"
+brew "mkvtoolnix"
+brew "neovim"
+brew "nmap"
+brew "openssl"
 brew "readline"
-brew "python"
-brew "postgresql", service_restart: true
-brew "ruby-build"
-brew "rbenv"
-brew "rbenv-default-gems"
 brew "reattach-to-user-namespace"
-brew "spark"
-brew "ssh-copy-id"
-brew "the_silver_searcher"
+brew "rsync"
 brew "tmux"
 brew "tree"
-brew "vim"
+brew "watch"
 brew "wget"
-brew "zsh"
-brew "homebrew/dupes/rsync"
-brew "thoughtbot/formulae/gitsh"
+brew "youtube-dl"
 
 # homebrew-cask
 # https://github.com/caskroom/homebrew-cask
+cask "1password"
+cask "adium"
+cask "amazon-drive"
+cask "arduino"
+cask "atom"
+# cask "Batch Rip Actions for Automator"
+cask "brotherprinterdrivers"
+cask "controlplane"
+cask "copyq"
+cask "dash"
+cask "docker-toolbox"
 cask "dropbox"
-cask "fantastical"
+cask "evernote"
+cask "firefox"
+cask "fritzing"
+cask "google-backup-and-sync"
 cask "google-chrome"
+cask "google-earth-pro"
+cask "gpgtools"
+cask "handbrake"
+# cask "Home Designer Pro/Suite 2016"
+cask "hp-easy-start"
 cask "iterm2"
-cask "skype"
+cask "keybase"
+cask "logitech-control-center"
+cask "logitech-myharmony"
+cask "logitech-unifying"
+cask "makemkv"
+cask "microsoft-azure-storage-explorer"
+cask "microsoft-office"
+cask "microsoft-r-open"
+cask "microsoft-teams"
+cask "myworkspace"
+cask "postman"
+cask "rstudio"
+cask "scansnap-manager-s1500"
+# cask "scansnap-manager"
+cask "screenhero"
+cask "sequel-pro"
+cask "skype-for-business"
+cask "sonos"
+cask "superduper"
+cask "synology-cloud-station-drive"
+cask "synology-photo-station-uploader"
+cask "transmission"
+cask "tunnelblick"
+cask "vlc"
+cask "visual-studio"
+cask "visual-studio-code"
+cask "virtualbox"
+cask "wireshark"
 
 # mas-cli
 # https://github.com/argon/mas
-mas "Evernote", id: 406056744
-mas "1Password", id: 443987910
-mas "Slack", id: 803453959
-mas "Tweetbot", id: 557168941
-mas "OmniFocus", id: 867299399
+# mas "1Password", id: 443987910 
+# mas "Blackmagic Disk Speed Test", id: 425264550 
+# mas "Buy Me a Pie!", id: 1208019955 
+# mas "Capture Mate", id: 1052668322 
+# mas "CloudApp", id: 417602904 
+# mas "Flycut", id: 442160987 
+# mas "GarageBand", id: 408980954 
+# mas "Go2Shell", id: 445770608 
+mas "Keynote", id: 409183694 
+mas "Kindle", id: 405399194 
+mas "LimeChat", id: 414030210 
+# mas "Lynda.com", id: 985958984 
+mas "Microsoft Remote Desktop", id: 715768417 
+mas "Moom", id: 419330170 
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541 
+mas "Slack", id: 803453959 
+mas "Space Gremlin", id: 414515628 
+# mas "Space Gremlin Pro", id: 414515628 
+mas "Transmit", id: 403388562 
+mas "Twitter", id: 409789998 
+mas "Valentina Studio", id: 604825918 
+# mas "Wunderlist", id: 410628904 
+mas "Xcode", id: 497799835 
+# mas "iBooks Author", id: 490152466 
+# mas "iMovie", id: 408981434 
+# mas "iPhoto", id: 408981381 
+
