@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
 dockutil --no-restart --remove all
-dockutil --no-restart --add "/System/Library/CoreServices/Finder.app"
-dockutil --no-restart --add "/Applications/Siri.app"
 dockutil --no-restart --add "/Applications/Calendar.app"
 dockutil --no-restart --add "/Applications/Microsoft Outlook.app"
-dockutil --no-restart --add "/Applications/Evernote.app"
 dockutil --no-restart --add "/Applications/Google Chrome.app"
+dockutil --no-restart --add "/Applications/Evernote.app"
+dockutil --no-restart --add "/Applications/Slack.app"
 dockutil --no-restart --add "/Applications/Messages.app"
 
 killall Dock
