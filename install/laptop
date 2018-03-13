@@ -120,7 +120,7 @@ find_latest_asdf() {
 # if [ -f "$BOOTSTRAP_DIR/.ruby-version" ]; then
   # ruby_version="$(<"$BOOTSTRAP_DIR/.ruby-version")"
 # else
-  # ruby_version="$(find_latest_ruby)"
+  # ruby_version="$(find_latest_asdf ruby)"
 # fi
 
 # shellcheck disable=SC2016
