@@ -1,0 +1,41 @@
+#!/bin/bash
+#############################################################################
+usage () {
+printf "%s" "\
+usage: git recent [-r remote] [count]
+
+  Prints the branches with the most recent commits.
+
+options:
+
+  -r        remote name
+  -h        prints help
+
+"
+}
+args=""
+while [ $OPTIND -le $# ]
+do
+  if getopts "r:h" option
+  then
+    case $option in
+      (r) remote=$OPTARG ;;
+      (h) usage
+          exit 0 ;;
+      (*) usage | head -n 1
+          exit 2 ;;
+    esac
+  else
+    args="$args \"\${$OPTIND}\"" 
+    OPTIND=$(($OPTIND + 1))
+  fi
+done
+eval set -- "$args"
+#############################################################################
+
+count=${1:-10}
+pattern=${remote:+refs/remotes/}${remote}
+pattern=${pattern:-refs/heads/}
+
+git for-each-ref --count=${count} --sort='-committerdate:iso8601' \
+  --format="%(committerdate:iso8601) %(refname:short)" ${pattern}
